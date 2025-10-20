@@ -7,18 +7,18 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      padding: 20px;
+      background: #f4f4f4;
+      padding: 30px;
       max-width: 700px;
       margin: auto;
     }
     textarea {
       width: 100%;
-      height: 150px;
+      height: 160px;
       padding: 10px;
       font-size: 16px;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid #bbb;
       resize: vertical;
     }
     button {
@@ -31,7 +31,7 @@
       cursor: pointer;
     }
     button:hover {
-      background: #005ea6;
+      background: #005fa3;
     }
     #output {
       margin-top: 20px;
@@ -40,12 +40,13 @@
       border-radius: 8px;
       border: 1px solid #ddd;
       white-space: pre-wrap;
+      min-height: 50px;
     }
   </style>
 </head>
 <body>
   <h2>Grammar & Clarity Checker</h2>
-  <p>Paste your text below. The tool will correct grammar and clarity, writing at Functional Skills Level without dashes.</p>
+  <p>Paste your text below. It will correct grammar and clarity, writing at Functional Skills Level without dashes.</p>
 
   <textarea id="input" placeholder="Paste text here..."></textarea>
   <button onclick="askGPT()">Check Grammar</button>
@@ -63,12 +64,12 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer YOUR_OPENAI_API_KEY" // replace this later
+          "Authorization": "Bearer YOUR_OPENAI_API_KEY" // <-- replace this line
         },
         body: JSON.stringify({
           model: "gpt-4o-mini",
           messages: [
-            { role: "system", content: "Correct grammar and clarity. Write at Functional Skills Level. Do not use dashes." },
+            { role: "system", content: "Correct grammar and clarity. Write in Functional Skills Level. Do not use dashes." },
             { role: "user", content: input }
           ]
         })
