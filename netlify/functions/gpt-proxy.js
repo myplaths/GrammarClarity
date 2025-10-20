@@ -19,7 +19,16 @@ export async function handler(event) {
     });
 
     const data = await response.json();
-    const reply = data?.choices?.[0]?.message?.content || "";
+
+    // Robustly extract reply
+    let reply = "";
+    if (data?.choices?.length && data.choices[0]?.message?.content) {
+      reply = data.choices[0].message.content;
+    } else if (data?.error) {
+      reply = `OpenAI error: ${JSON.stringify(data.error)}`;
+    } else {
+      reply = `Unexpected response:\n${JSON.stringify(data)}`;
+    }
 
     return { statusCode: 200, body: JSON.stringify({ reply }) };
   } catch (err) {
