@@ -45,12 +45,13 @@ async function askGPT() {
 }
 
 async function testFunction() {
+  const input = document.getElementById("input").value || "Default test text";
   document.getElementById("output").innerText = "Testing function...";
   try {
     const response = await fetch("/.netlify/functions/gpt-proxy", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: "Hello from test button" })
+      body: JSON.stringify({ text: input })
     });
     const data = await response.json();
     document.getElementById("output").innerText =
