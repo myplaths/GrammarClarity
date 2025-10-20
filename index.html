@@ -18,7 +18,7 @@
 
   <textarea id="input" placeholder="Paste text here..."></textarea>
   <button onclick="askGPT()">Check Grammar</button>
-  <button onclick="window.open('/.netlify/functions/gpt-proxy', '_blank')">Open Function URL</button>
+  <button onclick="testFunction()">Test Function POST</button>
 
   <div id="output"></div>
 
@@ -41,6 +41,22 @@ async function askGPT() {
       data.reply || data.error || "No response received.";
   } catch (err) {
     document.getElementById("output").innerText = "Error connecting to function: " + err.message;
+  }
+}
+
+async function testFunction() {
+  document.getElementById("output").innerText = "Testing function...";
+  try {
+    const response = await fetch("/.netlify/functions/gpt-proxy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: "Hello from test button" })
+    });
+    const data = await response.json();
+    document.getElementById("output").innerText =
+      "Function is working! Response:\n" + (data.reply || data.error);
+  } catch (err) {
+    document.getElementById("output").innerText = "Function not reachable: " + err.message;
   }
 }
 </script>
